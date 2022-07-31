@@ -1,0 +1,477 @@
+local Player = game.Players.LocalPlayer
+local Char = Player.Character
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local gui = script.Parent.Parent.criacao
+
+--Guis e Botoes
+local Comeco = script.Parent.comeco
+local Meio = script.Parent.meio
+local Finalizacao = script.Parent.final
+
+local comecoBotao = Comeco.Comecar
+local meioBotao = Meio.avancar
+local finalizacaoBotao = Finalizacao.jogar
+
+--Nome
+local nomeData = script.Parent.Data.nome
+local nomeBox = script.Parent.meio.nomeBox
+
+--Sobrenome
+local sobrenomeData = script.Parent.Data.sobrenome
+local sobrenomeBox = script.Parent.meio.sobrenomeBox
+
+--Idade
+local idadeData = script.Parent.Data.idade
+local idadeBox = script.Parent.meio.idadeBox
+local idadeInv = script.Parent.meio.idade.idadeInv
+
+--Genero
+local generoData = script.Parent.Data.genero
+local generoBox = script.Parent.meio.generoBox
+local generoInv = script.Parent.meio.genero.generoInv
+
+--Camisa
+local camisa = script.Parent.meio.Camisa
+local camisaId = script.Parent.Data.camisaId
+local camisa1 = camisa.c2
+local camisa2 = camisa.c1
+
+--Calça
+local calca = script.Parent.meio.Calca
+local calcaId = script.Parent.Data.calcaId
+local calca1 = calca.c2
+local calca2 = calca.c1
+
+--Cabelos
+local cabelo = script.Parent.meio.Cabelo
+local cabeloData = script.Parent.Data.cabeloVar
+local cabelo1 = cabelo.c2
+local cabelo2 = cabelo.c1
+local cWeld = Instance.new("WeldConstraint")
+local rC = Instance.new("RigidConstraint")
+cWeld.Parent = Char
+cWeld.Part0 = Char:WaitForChild("Head")
+rC.Attachment0 = Char:WaitForChild("Head").FaceCenterAttachment
+
+--Rostos
+local rosto = script.Parent.meio.Rostos
+local rostoData = script.Parent.Data.rostoId
+local rosto1 = rosto.c2
+local rosto2 = rosto.c1
+
+--Cor de pele
+local rassa = script.Parent.meio.Rassa
+local rassaData = script.Parent.Data.cor
+local rassaInv = script.Parent.meio.genero.corInv
+local rassa1 = rassa.c2
+local rassa2 = rassa.c1
+
+--Confirmar
+local nomeF = script.Parent.final.nome
+local sobrenomeF = script.Parent.final.sobrenome
+local idadeF = script.Parent.final.idade
+local generoF = script.Parent.final.genero
+
+local evento = game.ReplicatedStorage.CriadorDePersonagem.RemoteEvent
+
+comecoBotao.MouseButton1Click:Connect(function()
+	if Player.DadosPessoais.Criado.Value == 1 then
+		Comeco.Visible = false
+		Meio.Visible = true
+	end
+end)
+
+meioBotao.MouseButton1Click:Connect(function()
+	-- Transformações para data
+	nomeData.Value = nomeBox.Text
+	sobrenomeData.Value = sobrenomeBox.Text
+	idadeData.Value = tonumber(idadeBox.Text)
+	generoData.Value = generoBox.Text
+	local c1 = camisaId.Value
+	local c2 = calcaId.Value
+	local c3 = rostoData.Value
+	local c4 = rassaData.Value
+	local c5 = cabeloData.Value
+	wait(.1)
+
+	if idadeData.Value >= 18 and idadeData.Value <= 90 then 
+		idadeInv.Visible = false
+	if generoData.Value == "m" or generoData.Value == "f" or generoData.Value == "M" or generoData.Value == "F" then
+		generoInv.Visible = false
+	if rassaData.Value == "Light orange" or rassaData.Value == "Nougat" or rassaData.Value == "Dark orange" or rassaData.Value == "Burnt Sienna" then 
+		rassaInv.Visible = false
+				
+				evento:FireServer(nomeData.Value, sobrenomeData.Value, idadeData.Value, generoData.Value, c1, c2, c3, c4, c5, "criadorDePersonagemViniCy")
+				
+				nomeF.Text = "Nome: "..nomeData.Value
+				sobrenomeF.Text = "Sobrenome: "..sobrenomeData.Value
+				idadeF.Text = "Idade: "..idadeData.Value
+				generoF.Text = "Gênero: "..generoData.Value
+				wait(.1)
+				Meio.Visible = false
+				Finalizacao.Visible = true
+			else
+				rassaInv.Visible = true 
+			end
+		else
+			generoInv.Visible = true 
+		end
+	else
+		idadeInv.Visible = true 
+	end
+end)
+
+--Roupa
+camisa1.MouseButton1Click:Connect(function()
+	if camisaId.Value == "rbxassetid://7521969813" then
+		camisaId.Value = "rbxassetid://6273977860"
+		Char.Camisa.ShirtTemplate = camisaId.Value
+	elseif camisaId.Value == "rbxassetid://6273977860" then
+		camisaId.Value = "rbxassetid://5581594598"
+		Char.Camisa.ShirtTemplate = camisaId.Value
+	elseif camisaId.Value == "rbxassetid://5581594598" then
+		camisaId.Value = "rbxassetid://5829154097"
+		Char.Camisa.ShirtTemplate = camisaId.Value
+	elseif camisaId.Value == "rbxassetid://5829154097" then
+		camisaId.Value = "rbxassetid://6302195065"
+		Char.Camisa.ShirtTemplate = camisaId.Value
+	elseif camisaId.Value == "rbxassetid://6302195065" then
+		camisaId.Value = "rbxassetid://4007917986"
+		Char.Camisa.ShirtTemplate = camisaId.Value
+	elseif camisaId.Value == "rbxassetid://4007917986" then
+		camisaId.Value = "rbxassetid://6198939185"
+		Char.Camisa.ShirtTemplate = camisaId.Value
+	elseif camisaId.Value == "rbxassetid://6198939185" then
+		camisaId.Value = "rbxassetid://6273977860"
+	end
+end)
+camisa2.MouseButton1Click:Connect(function()
+	if camisaId.Value == "rbxassetid://7521969813" then
+		camisaId.Value = "rbxassetid://6198939185"
+		Char.Camisa.ShirtTemplate = camisaId.Value
+	elseif camisaId.Value == "rbxassetid://6198939185" then
+		camisaId.Value = "rbxassetid://4007917986"
+		Char.Camisa.ShirtTemplate = camisaId.Value
+	elseif camisaId.Value == "rbxassetid://4007917986" then
+		camisaId.Value = "rbxassetid://6302195065"
+		Char.Camisa.ShirtTemplate = camisaId.Value
+	elseif camisaId.Value == "rbxassetid://6302195065" then
+		camisaId.Value = "rbxassetid://5829154097"
+		Char.Camisa.ShirtTemplate = camisaId.Value
+	elseif camisaId.Value == "rbxassetid://5829154097" then
+		camisaId.Value = "rbxassetid://5581594598"
+		Char.Camisa.ShirtTemplate = camisaId.Value
+	elseif camisaId.Value == "rbxassetid://5581594598" then
+		camisaId.Value = "rbxassetid://6273977860"
+		Char.Camisa.ShirtTemplate = camisaId.Value
+	elseif camisaId.Value == "rbxassetid://6273977860" then
+		camisaId.Value = "rbxassetid://6198939185"
+	end
+end)
+calca1.MouseButton1Click:Connect(function()
+	if calcaId.Value == "rbxassetid://791775453" then
+		calcaId.Value = "rbxassetid://1049635024"
+		Char.Calca.PantsTemplate = calcaId.Value
+	elseif calcaId.Value == "rbxassetid://1049635024" then
+		calcaId.Value = "rbxassetid://769626306"
+		Char.Calca.PantsTemplate = calcaId.Value
+	elseif calcaId.Value == "rbxassetid://769626306" then
+		calcaId.Value = "rbxassetid://6187370531"
+		Char.Calca.PantsTemplate = calcaId.Value
+	elseif calcaId.Value == "rbxassetid://6187370531" then
+		calcaId.Value = "rbxassetid://5459410451"
+		Char.Calca.PantsTemplate = calcaId.Value
+	elseif calcaId.Value == "rbxassetid://5459410451" then
+		calcaId.Value = "rbxassetid://5449225114"
+		Char.Calca.PantsTemplate = calcaId.Value
+	elseif calcaId.Value == "rbxassetid://5449225114" then
+		calcaId.Value = "rbxassetid://5784928991"
+		Char.Calca.PantsTemplate = calcaId.Value
+	elseif calcaId.Value == "rbxassetid://5784928991" then
+		calcaId.Value = "rbxassetid://1049635024"
+	end
+end)
+calca2.MouseButton1Click:Connect(function()
+	if calcaId.Value == "rbxassetid://791775453" then
+		calcaId.Value = "rbxassetid://5784928991"
+		Char.Calca.PantsTemplate = calcaId.Value
+	elseif calcaId.Value == "rbxassetid://5784928991" then
+		calcaId.Value = "rbxassetid://5449225114"
+		Char.Calca.PantsTemplate = calcaId.Value
+	elseif calcaId.Value == "rbxassetid://5449225114" then
+		calcaId.Value = "rbxassetid://5459410451"
+		Char.Calca.PantsTemplate = calcaId.Value
+	elseif calcaId.Value == "rbxassetid://5459410451" then
+		calcaId.Value = "rbxassetid://6187370531"
+		Char.Calca.PantsTemplate = calcaId.Value
+	elseif calcaId.Value == "rbxassetid://6187370531" then
+		calcaId.Value = "rbxassetid://769626306"
+		Char.Calca.PantsTemplate = calcaId.Value
+	elseif calcaId.Value == "rbxassetid://769626306" then
+		calcaId.Value = "rbxassetid://1049635024"
+		Char.Calca.PantsTemplate = calcaId.Value
+	elseif calcaId.Value == "rbxassetid://1049635024" then
+		calcaId.Value = "rbxassetid://5784928991"
+	end
+end)
+--Cabelo
+cabelo1.MouseButton1Click:Connect(function()
+	if cabeloData.Value == 0 then
+		cabeloData.Value = 1
+		
+		local cabelo = Char.Cabelo.c1
+		cabelo.Transparency = 0
+		
+	elseif cabeloData.Value == 1 then
+		cabeloData.Value = 2
+		
+		local old = Char.Cabelo.c1
+		old.Transparency = 1
+		local cabelo = Char.Cabelo.c2
+		cabelo.Transparency = 0
+		
+	elseif cabeloData.Value == 2 then
+		cabeloData.Value = 3
+
+		local old = Char.Cabelo.c2
+		old.Transparency = 1
+		local cabelo = Char.Cabelo.c3
+		cabelo.Transparency = 0
+		
+	elseif cabeloData.Value == 3 then
+		cabeloData.Value = 4
+		
+		local old = Char.Cabelo.c3
+		old.Transparency = 1
+		local cabelo = Char.Cabelo.c4
+		cabelo.Transparency = 0
+		
+	elseif cabeloData.Value == 4 then
+		cabeloData.Value = 5
+
+		local old = Char.Cabelo.c4
+		old.Transparency = 1
+		local cabelo = Char.Cabelo.c5
+		cabelo.Transparency = 0
+		
+	elseif cabeloData.Value == 5 then
+		cabeloData.Value = 6
+
+		local old = Char.Cabelo.c5
+		old.Transparency = 1
+		local cabelo = Char.Cabelo.c6
+		cabelo.Transparency = 0
+		
+	elseif cabeloData.Value == 6 then
+		cabeloData.Value = 0
+
+		local old = Char.Cabelo.c6
+		old.Transparency = 1
+	end
+end)
+cabelo2.MouseButton1Click:Connect(function()
+	if cabeloData.Value == 0 then
+		cabeloData.Value = 6
+
+		local cabelo = Char.Cabelo.c6
+		cabelo.Transparency = 0
+		
+	elseif cabeloData.Value == 6 then
+		cabeloData.Value = 5
+		
+		local old = Char.Cabelo.c6
+		old.Transparency = 1
+		local cabelo = Char.Cabelo.c5
+		cabelo.Transparency = 0
+		
+	elseif cabeloData.Value == 5 then
+		cabeloData.Value = 4
+		
+		local old = Char.Cabelo.c5
+		old.Transparency = 1
+		local cabelo = Char.Cabelo.c4
+		cabelo.Transparency = 0
+		
+	elseif cabeloData.Value == 4 then
+		cabeloData.Value = 3
+		
+		local old = Char.Cabelo.c4
+		old.Transparency = 1
+		local cabelo = Char.Cabelo.c3
+		cabelo.Transparency = 0
+		
+	elseif cabeloData.Value == 3 then
+		cabeloData.Value = 2
+		
+		local old = Char.Cabelo.c3
+		old.Transparency = 1
+		local cabelo = Char.Cabelo.c2
+		cabelo.Transparency = 0
+		
+	elseif cabeloData.Value == 2 then
+		cabeloData.Value = 1
+		
+		local old = Char.Cabelo.c2
+		old.Transparency = 1
+		local cabelo = Char.Cabelo.c1
+		cabelo.Transparency = 0
+		
+	elseif cabeloData.Value == 1 then
+		cabeloData.Value = 0
+		
+		local old = Char.Cabelo.c1
+		old.Transparency = 1
+		
+	end
+end)
+--Rosto
+rosto1.MouseButton1Click:Connect(function()
+	if rostoData.Value == "face" then
+		Char.Head.face.Transparency = 1
+		rostoData.Value = "face1"
+		Char.Head.face1.Transparency = 0
+	elseif  rostoData.Value == "face1" then
+		Char.Head.face1.Transparency = 1
+		rostoData.Value = "face2"
+		Char.Head.face2.Transparency = 0
+	elseif  rostoData.Value == "face2" then
+		Char.Head.face2.Transparency = 1
+		rostoData.Value = "face3"
+		Char.Head.face3.Transparency = 0
+	elseif  rostoData.Value == "face3" then
+		Char.Head.face3.Transparency = 1
+		rostoData.Value = "face4"
+		Char.Head.face4.Transparency = 0
+	elseif  rostoData.Value == "face4" then
+		Char.Head.face4.Transparency = 1
+		rostoData.Value = "face5"
+		Char.Head.face5.Transparency = 0
+	elseif  rostoData.Value == "face5" then
+		Char.Head.face5.Transparency = 1
+		rostoData.Value = "face6"
+		Char.Head.face6.Transparency = 0
+	elseif  rostoData.Value == "face6" then
+		Char.Head.face6.Transparency = 1
+		rostoData.Value = "face1"
+		Char.Head.face1.Transparency = 0
+	end
+end)
+rosto2.MouseButton1Click:Connect(function()
+	if  rostoData.Value == "face" then
+		Char.Head.face.Transparency = 1
+		rostoData.Value = "face6"
+		Char.Head.face6.Transparency = 0
+	elseif  rostoData.Value == "face6" then
+		Char.Head.face6.Transparency = 1
+		rostoData.Value = "face5"
+		Char.Head.face5.Transparency = 0
+	elseif  rostoData.Value == "face5" then
+		Char.Head.face5.Transparency = 1
+		rostoData.Value = "face4"
+		Char.Head.face4.Transparency = 0
+	elseif  rostoData.Value == "face4" then
+		Char.Head.face4.Transparency = 1
+		rostoData.Value = "face3"
+		Char.Head.face3.Transparency = 0
+	elseif  rostoData.Value == "face3" then
+		Char.Head.face3.Transparency = 1
+		rostoData.Value = "face2"
+		Char.Head.face2.Transparency = 0
+	elseif  rostoData.Value == "face2" then
+		Char.Head.face2.Transparency = 1
+		rostoData.Value = "face1"
+		Char.Head.face1.Transparency = 0
+	elseif  rostoData.Value == "face1" then
+		Char.Head.face1.Transparency = 1
+		rostoData.Value = "face6"
+		Char.Head.face6.Transparency = 0
+	end
+end)
+--Cor de pele
+rassa1.MouseButton1Click:Connect(function()
+	if rassaData.Value == "White" then
+		rassaData.Value = "Light orange"
+		Char.Cor.HeadColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.TorsoColor=BrickColor.new(rassaData.Value)
+	elseif rassaData.Value == "Light orange" then
+		rassaData.Value = "Nougat"
+		Char.Cor.HeadColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.TorsoColor=BrickColor.new(rassaData.Value)
+	elseif rassaData.Value == "Nougat" then
+		rassaData.Value = "Dark orange"
+		Char.Cor.HeadColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.TorsoColor=BrickColor.new(rassaData.Value)
+	elseif rassaData.Value == "Dark orange" then
+		rassaData.Value = "Burnt Sienna"
+		Char.Cor.HeadColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.TorsoColor=BrickColor.new(rassaData.Value)
+	elseif rassaData.Value == "Burnt Sienna" then 
+		rassaData.Value = "Light orange"
+		Char.Cor.HeadColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.TorsoColor=BrickColor.new(rassaData.Value)
+	end
+end)
+
+rassa2.MouseButton1Click:Connect(function()
+	if rassaData.Value == "White" then
+		rassaData.Value = "Burnt Sienna"
+		Char.Cor.HeadColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.TorsoColor=BrickColor.new(rassaData.Value)
+	elseif rassaData.Value == "Burnt Sienna" then 
+		rassaData.Value = "Dark orange"
+		Char.Cor.HeadColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.TorsoColor=BrickColor.new(rassaData.Value)
+	elseif rassaData.Value == "Dark orange" then
+		rassaData.Value = "Nougat"
+		Char.Cor.HeadColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.TorsoColor=BrickColor.new(rassaData.Value)
+	elseif rassaData.Value == "Nougat" then
+		rassaData.Value = "Light orange"
+		Char.Cor.HeadColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.TorsoColor=BrickColor.new(rassaData.Value)
+	elseif rassaData.Value == "Light orange" then 
+		rassaData.Value = "Burnt Sienna"
+		Char.Cor.HeadColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.LeftLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightArmColor=BrickColor.new(rassaData.Value)
+		Char.Cor.RightLegColor=BrickColor.new(rassaData.Value)
+		Char.Cor.TorsoColor=BrickColor.new(rassaData.Value)
+	end
+end)
